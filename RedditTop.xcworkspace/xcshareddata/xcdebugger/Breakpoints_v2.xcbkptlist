@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "RedditTop/RedditEntriesTableView.swift"
-            timestampString = "506107838.664931"
+            timestampString = "506125764.446204"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "changeTo(listing:)"
             landmarkType = "7">
             <Actions>

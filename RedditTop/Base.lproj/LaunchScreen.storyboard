@@ -23,14 +23,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reddit" translatesAutoresizingMaskIntoConstraints="NO" id="1Y4-at-LWV">
-                                <rect key="frame" x="66" y="205" width="243" height="256"/>
+                                <rect key="frame" x="116" y="205.5" width="143" height="256"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.792156862745098" green="0.87058823529411766" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="1Y4-at-LWV" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="50X-Yb-6Ou"/>
-                            <constraint firstItem="1Y4-at-LWV" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="50" id="Cor-2W-fd2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1Y4-at-LWV" secondAttribute="trailing" constant="50" id="mza-c4-xsG"/>
+                            <constraint firstItem="1Y4-at-LWV" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="100" id="Cor-2W-fd2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1Y4-at-LWV" secondAttribute="trailing" constant="100" id="mza-c4-xsG"/>
                         </constraints>
                     </view>
                 </viewController>

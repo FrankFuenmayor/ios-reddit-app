@@ -22,23 +22,16 @@ class RedditEntriesTableView: UITableView {
     var redditEntries = [RedditEntry]()
     var pageSize    = 10
     
-    var isLoading : Bool = false
     var lastRequest : URLSessionTask?
-    
     
     var selectedListing : RedditListing = RedditListing.top {
         didSet(listing){
-            lastRequest?.cancel()
-            redditEntries.removeAll()
-            reloadData()
-            load(listing: listing)
+            changeTo(listing: listing)
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        contentInset = UIEdgeInsets.zero
         
         rowHeight = UITableViewAutomaticDimension
         estimatedRowHeight = 100
@@ -51,34 +44,43 @@ class RedditEntriesTableView: UITableView {
     
     func load(listing:RedditListing) {
         
-        if(isLoading){
-            return;
-        }
-        
-        isLoading = true
-        
         let firstLoad = redditEntries.count  == 0
-        
         let topEndpoint = RedditEnpoint.endpoint(listing: selectedListing)
         
         lastRequest = RedditService.service.request(endpoint: topEndpoint,
                                                     httpMethod: .get)
         { [unowned self] (top) in
-            self.isLoading = false
-            let from = self.redditEntries.count;
-            self.redditEntries.append(contentsOf: top.getResponse())
-            
             if firstLoad {
+                self.redditEntries.append(contentsOf: top.getResponse())
                 self.reloadData()
             } else {
-                var rows = [IndexPath]()
-                for row in from..<self.redditEntries.count {
-                    rows.append(IndexPath(row: row, section: 0))
-                }
-                print(rows)
-                self.insertRows(at: rows, with: .fade)
+                self.load(entries: top.getResponse())
             }
         }
+    }
+    
+    func load(entries newEntries:[RedditEntry]){
+        
+        let from = redditEntries.count;
+        var rows = [IndexPath]()
+        
+        for row in from..<self.redditEntries.count {
+            rows.append(IndexPath(row: row, section: 0))
+        }
+        
+        self.insertRows(at: rows, with: .fade)
+    }
+    
+    func changeTo(listing:RedditListing){
+        
+        let shouldCancel = lastRequest?.state != .completed && lastRequest?.state != .canceling
+        
+        if shouldCancel {
+            lastRequest?.cancel()
+        }
+        redditEntries.removeAll()
+        reloadData()
+        load(listing: listing)
     }
 }
 

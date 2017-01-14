@@ -22,10 +22,15 @@ class MainViewController: UIViewController {
         
         sgmListing.addTarget(self, action: #selector(changeListing(segmented:)), for: .valueChanged)        
         tblEntries.load(listing: availableListing[sgmListing.selectedSegmentIndex])
+        
     }
     
     func changeListing(segmented:UISegmentedControl){
         tblEntries.selectedListing = availableListing[segmented.selectedSegmentIndex]
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        navigationController?.isNavigationBarHidden = traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.regular
     }
 }
 

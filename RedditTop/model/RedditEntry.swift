@@ -17,9 +17,10 @@ struct RedditEntry : CustomStringConvertible {
     var subReddit : String?
     var commentCount : Int?
     var url:URL?
+    var name:String?
     
     var description: String {
-        return "author: \(author), title: \(title), creationDate: \(creationDate), thumbnail: \(thumbnail),  commentCount: \(commentCount), subReddit: \(subReddit)"
+        return "author: \(author), title: \(title), creationDate: \(creationDate), thumbnail: \(thumbnail),  commentCount: \(commentCount), subReddit: \(subReddit), name: \(name)"
     }
     
     init(author:String?,
@@ -28,7 +29,8 @@ struct RedditEntry : CustomStringConvertible {
          thumbnail:URL?,
          subReddit:String?,
          commentCount:Int?,
-         url:URL?) {
+         url:URL?,
+         name:String?) {
         
         self.title = title
         self.author = author
@@ -37,6 +39,7 @@ struct RedditEntry : CustomStringConvertible {
         self.subReddit = subReddit
         self.thumbnail = thumbnail
         self.url = url
+        self.name = name
     }
     
     static func redditEntry(fromJson jsonObject:Any?) -> RedditEntry {
@@ -54,7 +57,8 @@ struct RedditEntry : CustomStringConvertible {
             thumbnail: URL(string: thumbnail),
             subReddit: data["subreddit"] as? String,
             commentCount: data["num_comments"] as? Int,
-            url:URL(string:redditUrl))
+            url:URL(string:redditUrl),
+            name:data["name"] as? String)
         
         return entry
     }

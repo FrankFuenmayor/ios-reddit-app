@@ -11,13 +11,8 @@ import Foundation
 protocol Endpoint {
     associatedtype EndpointResponseType
     
-    var uri : String { get }
-    var queryParams : Dictionary<String,String> { get set }
-    
+    func getURI() -> String
+    func getQueryParams() -> [String:String]
     func receive(responseObject:Any?, response:URLResponse?, error:Error?) -> Void
     func getResponse() -> EndpointResponseType
-}
-
-enum HttpMethod : String {
-    case get = "GET"
 }

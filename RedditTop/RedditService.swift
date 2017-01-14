@@ -9,21 +9,23 @@
 import Foundation
 import AFNetworking
 
+enum HttpMethod : String {
+    case get = "GET"
+}
+
 class RedditService {
     
     static let service = RedditService()
     
-    let baseUrl = "https://www.reddit.com"
+    let baseUrl = Bundle.main.infoDictionary?["RedditBaseUrl"] as! String
     
-    let session = URLSession.shared
-    let config  = URLSessionConfiguration.default
     
     var manager : AFURLSessionManager {
-        return AFURLSessionManager(sessionConfiguration: config)
+        return AFURLSessionManager(sessionConfiguration: URLSessionConfiguration.default)
     }
     
-    
-    fileprivate init(){        
+    fileprivate init() {
+        
     }
     
     func request<EndpointType:Endpoint>(endpoint:EndpointType,
@@ -31,14 +33,13 @@ class RedditService {
                  completion: @escaping (EndpointType) -> Void) -> URLSessionDataTask{
         
         var url = baseUrl;
-        url.append(endpoint.uri)
+        url.append(endpoint.getURI())
         url.append("/.json");
         
         let urlComponents = NSURLComponents(string: url)
-        
         var queryItems = [URLQueryItem]()
         
-        for (name, value) in endpoint.queryParams {
+        for (name, value) in endpoint.getQueryParams() {
             queryItems.append(URLQueryItem(name: name, value: value))
         }
         
@@ -56,6 +57,5 @@ class RedditService {
         task.resume()
         
         return task;
-        
     }
 }

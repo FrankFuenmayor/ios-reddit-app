@@ -130,6 +130,7 @@
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="imgThumbnail" destination="Ue5-Wy-lyQ" id="lbm-C0-8g4"/>
+                                            <outlet property="imgWidth" destination="HAS-ob-Odk" id="GFo-sD-9ah"/>
                                             <outlet property="lblAuthor" destination="Z8T-5j-TeK" id="7Bs-MD-VwR"/>
                                             <outlet property="lblComentarios" destination="rQM-fQ-bVM" id="32c-8t-ZEA"/>
                                             <outlet property="lblFecha" destination="ErN-Dx-M4L" id="Hec-e6-Wmc"/>

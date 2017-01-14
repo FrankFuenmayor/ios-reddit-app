@@ -38,8 +38,6 @@ class RedditEntriesTableView: UITableView {
         
         delegate = self
         dataSource = self
-        
-        load(listing: .top)
     }
     
     func load(listing:RedditListing) {
@@ -50,20 +48,23 @@ class RedditEntriesTableView: UITableView {
         lastRequest = RedditService.service.request(endpoint: topEndpoint,
                                                     httpMethod: .get)
         { [unowned self] (top) in
-            if firstLoad {
-                self.redditEntries.append(contentsOf: top.getResponse())
-                self.reloadData()
-            } else {
-                self.load(entries: top.getResponse())
-            }
+            self.load(entries: top.getResponse(), replace: firstLoad)
         }
     }
     
-    func load(entries newEntries:[RedditEntry]){
+    func load(entries newEntries:[RedditEntry], replace:Bool = true){
+        
+        if replace {
+            redditEntries.removeAll()
+            redditEntries.append(contentsOf: newEntries)
+            reloadData()
+            return
+        }
         
         let from = redditEntries.count;
-        var rows = [IndexPath]()
+        redditEntries.append(contentsOf: newEntries)
         
+        var rows = [IndexPath]()
         for row in from..<self.redditEntries.count {
             rows.append(IndexPath(row: row, section: 0))
         }

@@ -37,8 +37,8 @@ struct RedditEntry : CustomStringConvertible {
         self.creationDate = creationDate
         self.commentCount = commentCount
         self.subReddit = subReddit
-        self.thumbnail = thumbnail
-        self.url = url
+        self.thumbnail = thumbnail?.scheme != nil ? thumbnail : nil
+        self.url = url?.scheme != nil ? url : nil
         self.name = name
     }
     
@@ -47,17 +47,17 @@ struct RedditEntry : CustomStringConvertible {
         
         let data = jsonObject as! [String:AnyObject]
         
-        let thumbnail = data["thumbnail"] as? String ?? ""
-        let redditUrl = data["url"] as? String ?? ""
+        let thumbnail = URL(string: data["thumbnail"] as? String ?? "")
+        let url       = URL(string: data["url"] as? String ?? "")
         
         let entry = RedditEntry(
             author: data["author"] as? String,
             title: data["title"] as? String,
             creationDate: Date(),
-            thumbnail: URL(string: thumbnail),
+            thumbnail: thumbnail,
             subReddit: data["subreddit"] as? String,
             commentCount: data["num_comments"] as? Int,
-            url:URL(string:redditUrl),
+            url: url,
             name:data["name"] as? String)
         
         return entry

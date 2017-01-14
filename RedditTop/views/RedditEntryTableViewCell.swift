@@ -18,20 +18,19 @@ class RedditEntryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblFecha: UILabel!
     @IBOutlet weak var lblAuthor: UILabel!
+    @IBOutlet weak var imgWidth: NSLayoutConstraint!
     
     func setReddit(entry:RedditEntry) -> Void {
         
-        if let title = lblTitle {
-            title.text = entry.title
-        }
-
-        
+        lblTitle.text = entry.title
         lblAuthor.text = entry.author
         lblComentarios.text = "Comentarios \(entry.commentCount!)"
         lblSubReddit.text = entry.subReddit
         imgThumbnail.image = nil;
+        imgWidth.constant = 0
         
         if let thumbnailUrl = entry.thumbnail {
+            imgWidth.constant = 100
             imgThumbnail.setImageWith(thumbnailUrl);
         }
     }

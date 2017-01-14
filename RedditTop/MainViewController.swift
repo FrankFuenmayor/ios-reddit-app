@@ -20,7 +20,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         self.tblEntries.redditDelegate = self;
         
-        sgmListing.addTarget(self, action: #selector(changeListing(segmented:)), for: .valueChanged)
+        sgmListing.addTarget(self, action: #selector(changeListing(segmented:)), for: .valueChanged)        
+        tblEntries.load(listing: availableListing[sgmListing.selectedSegmentIndex])
     }
     
     func changeListing(segmented:UISegmentedControl){

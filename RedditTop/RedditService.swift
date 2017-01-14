@@ -37,13 +37,8 @@ class RedditService {
         url.append("/.json");
         
         let urlComponents = NSURLComponents(string: url)
-        var queryItems = [URLQueryItem]()
         
-        for (name, value) in endpoint.getQueryParams() {
-            queryItems.append(URLQueryItem(name: name, value: value))
-        }
-        
-        urlComponents?.queryItems = queryItems;
+        urlComponents?.queryItems = endpoint.getQueryParams().map {URLQueryItem(name: $0, value: $1)}
         
         var req = URLRequest(url: urlComponents!.url!)
         

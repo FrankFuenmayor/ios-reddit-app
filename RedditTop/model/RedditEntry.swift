@@ -8,6 +8,7 @@
 
 import Foundation
 
+///Modelo de una entrada reddit
 struct RedditEntry : CustomStringConvertible {
 
     var author : String?

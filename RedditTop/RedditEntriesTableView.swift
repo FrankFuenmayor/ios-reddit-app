@@ -8,15 +8,20 @@
 
 import UIKit
 
+///protocolo usado por  RedditEntriesTableView
 protocol RedditTableViewDelegate
 {
+    /**
+     * Este metodo es llamado por RedditEntriesTableView cada vez que el usuario selecciona
+     * una elemento de la tabla
+     */
     func redditEntriesTableView(tableView:RedditEntriesTableView,
                                 didSelectEntry entry:RedditEntry);
 }
 
 
 class RedditEntriesTableView: UITableView {
-
+    
     var redditDelegate : RedditTableViewDelegate?
     
     var redditEntries = [RedditEntry]()
@@ -40,6 +45,9 @@ class RedditEntriesTableView: UITableView {
         dataSource = self
     }
     
+    /** Este metodo genera un request al Reddit y posteriormente llena la tabla con
+     los datos
+     */
     func load(listing:RedditListing) {
         
         let firstLoad = redditEntries.count  == 0
@@ -52,6 +60,9 @@ class RedditEntriesTableView: UITableView {
         }
     }
     
+    /** este metodo llena el modelo con el arreglo y refresca la tabla 
+     de manera apropiada
+     */
     func load(entries newEntries:[RedditEntry], replace:Bool = true){
         
         if replace {
@@ -72,7 +83,10 @@ class RedditEntriesTableView: UITableView {
         self.insertRows(at: rows, with: .fade)
     }
     
-    func changeTo(listing:RedditListing){
+    /** Cancela cualquier solicitud actual si existe una, limpia el modelo
+     y llama a load(listing) para cargar la tabla con nueva informacion
+    */
+    private func changeTo(listing:RedditListing){
         
         let shouldCancel = lastRequest?.state != .completed && lastRequest?.state != .canceling
         
@@ -85,8 +99,18 @@ class RedditEntriesTableView: UITableView {
     }
 }
 
+extension RedditEntriesTableView : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //invocar el metodod de reddit delegate
+        redditDelegate?.redditEntriesTableView(tableView: self,
+                                               didSelectEntry: redditEntries[indexPath.row])
+    }
+}
+
+// MARK: UIKit metodods necesatios para la vista
+
 extension RedditEntriesTableView : UITableViewDataSource {
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -103,15 +127,9 @@ extension RedditEntriesTableView : UITableViewDataSource {
     }
 }
 
-extension RedditEntriesTableView : UITableViewDelegate {    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        redditDelegate?.redditEntriesTableView(tableView: self,
-                                               didSelectEntry: redditEntries[indexPath.row])
-    }
-}
 
 extension RedditEntriesTableView : UIScrollViewDelegate {
-    
+    ///Implementacion del pull refresh de la tabla
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         let area = self.contentSize.height - self.bounds.size.height;

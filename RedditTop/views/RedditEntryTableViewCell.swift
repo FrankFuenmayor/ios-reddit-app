@@ -8,6 +8,7 @@
 
 import UIKit
 
+///Celda utilizada para presentar las distintas entradas en la tabla.
 class RedditEntryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblTitle: UILabel!

@@ -18,9 +18,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tblEntries.redditDelegate = self;
         
-        sgmListing.addTarget(self, action: #selector(changeListing(segmented:)), for: .valueChanged)        
+        self.tblEntries.redditDelegate = self;
+        sgmListing.addTarget(self, action: #selector(changeListing(segmented:)), for: .valueChanged)
         tblEntries.load(listing: availableListing[sgmListing.selectedSegmentIndex])
         
     }
@@ -34,7 +34,12 @@ class MainViewController: UIViewController {
     }
 }
 
+/*
+ * A traves de RedditTableViewDelegate se cominican MainViewController y RedditTableView
+ * de esta manera se logra el menor acoplamiento de ambas clases
+ */
 extension MainViewController : RedditTableViewDelegate {
+    
     func redditEntriesTableView(tableView: RedditEntriesTableView, didSelectEntry entry: RedditEntry) {
         selectedEntry = entry
         performSegue(withIdentifier: "presentRedditDetail", sender: self)

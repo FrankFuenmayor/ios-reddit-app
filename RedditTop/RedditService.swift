@@ -9,14 +9,21 @@
 import Foundation
 import AFNetworking
 
+///Enum para los metodos HTTP
 enum HttpMethod : String {
     case get = "GET"
 }
 
+/**
+ Clase encargada de comunicarse con el API Reddit usando Endpoint para la construccion de
+ las solucitudes
+*/
 class RedditService {
     
     static let service = RedditService()
     
+    /**La url esta configurada en el Info.plist y en Build Configuration
+     de esta manera se puede establecer distintos valores por configuracion en el proyecto*/
     let baseUrl = Bundle.main.infoDictionary?["RedditBaseUrl"] as! String
     
     
@@ -24,10 +31,12 @@ class RedditService {
         return AFURLSessionManager(sessionConfiguration: URLSessionConfiguration.default)
     }
     
-    fileprivate init() {
-        
-    }
+    //Init privado para asegurar el singleton
+    fileprivate init() {}
     
+    /**
+     Contruye y ejecuta un request al API con la informacion del endpoint
+     */
     func request<EndpointType:Endpoint>(endpoint:EndpointType,
                  httpMethod:HttpMethod,
                  completion: @escaping (EndpointType) -> Void) -> URLSessionDataTask{

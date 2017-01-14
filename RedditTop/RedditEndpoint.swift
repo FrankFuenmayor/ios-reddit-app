@@ -8,9 +8,13 @@
 
 import Foundation
 
-
+/**
+ Esta clase funciona de base para todos los endpoints usados en la aplicacion
+ se encarga de hacer todas las tareas comnunes necesarias
+ */
 class RedditEnpoint : Endpoint {
     
+    ///El tipo de dato esperado en la respuesta
     typealias EndpointResponseType = [RedditEntry]
     
     private var queryParams : [String:String]
@@ -21,6 +25,7 @@ class RedditEnpoint : Endpoint {
         queryParams = [:]
     }
     
+    ///para la paginacion reddit no usa numero de pagina sino que se hace referencia a una entrada y si se quiere lo que esta antes o despues de la misma
     func after(entry:RedditEntry?) {
         if let name = entry?.name {
             queryParams = ["after" : name]
@@ -33,6 +38,7 @@ class RedditEnpoint : Endpoint {
         completionHandler = handler
     }
     
+    ///Este metodo es el que indica la URI del endpoint, cada endpoint debe sobreecribirlo,
     func getURI() -> String {
         preconditionFailure("Override this method")
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+///Endpoint a la URI /new
 class RedditNew : RedditEnpoint {
     override func getURI() -> String {
         return "/new"

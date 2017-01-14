@@ -10,84 +10,27 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    @IBOutlet weak var tblEntries: UITableView!
-    
-    var redditEntries : [RedditEntry] = [RedditEntry]()
-    var pageSize    = 10
-    var currentPage = 0
-    
-    var loadingPage : Int = -1
-    
-    let refreshControl = UIRefreshControl()
-    
+    @IBOutlet weak var tblEntries: RedditEntriesTableView!
+    @IBOutlet weak var sgmListing: UISegmentedControl!
+
     var selectedEntry : RedditEntry?
+    let availableListing : [RedditListing] = [.top, .new, .rising]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tblEntries.rowHeight = UITableViewAutomaticDimension
-        tblEntries.estimatedRowHeight = 100
+        self.tblEntries.redditDelegate = self;
         
-        refreshControl.addTarget(self,
-                                 action: #selector(loadEntries),
-                                 for: .valueChanged)
-        
-        tblEntries.addSubview(refreshControl)
-        
-        loadEntries()
+        sgmListing.addTarget(self, action: #selector(changeListing(segmented:)), for: .valueChanged)
     }
     
-    func loadEntries() {
-        
-        if(currentPage == loadingPage){
-            refreshControl.endRefreshing()
-            return;
-        }
-        
-        loadingPage = currentPage
-        
-        let count = currentPage * pageSize;
-        let limit = count + pageSize
-        
-        let topEndpoint = RedditTopEndpoint(count: count, limit: limit)
-        
-        let dataTask = RedditService.service.request(endpoint: topEndpoint,
-                                      httpMethod: .get)
-        { [unowned self, weak table = tblEntries] (top) in
-            
-            self.redditEntries.append(contentsOf: top.getResponse())
-            
-            table!.reloadData();
-            self.loadingPage = -1;
-        }
-        
-        refreshControl.setRefreshingWithStateOf(dataTask)
-    }
-    
-}
-
-extension MainViewController : UITableViewDataSource {
-    
-    
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.redditEntries.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "redditEntryCell") as? RedditEntryTableViewCell
-        cell?.setReddit(entry: redditEntries[indexPath.row])
-        return cell!;
+    func changeListing(segmented:UISegmentedControl){
+        tblEntries.selectedListing = availableListing[segmented.selectedSegmentIndex]
     }
 }
 
-extension MainViewController : UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedEntry = redditEntries[indexPath.row]
+extension MainViewController : RedditTableViewDelegate {
+    func redditEntriesTableView(tableView: RedditEntriesTableView, didSelectEntry entry: RedditEntry) {
+        selectedEntry = entry
         performSegue(withIdentifier: "presentRedditDetail", sender: self)
     }
     
@@ -97,6 +40,3 @@ extension MainViewController : UITableViewDelegate {
         detailViewController?.redditEntry = selectedEntry
     }
 }
-
-
-

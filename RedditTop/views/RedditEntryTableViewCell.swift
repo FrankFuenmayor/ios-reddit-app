@@ -21,7 +21,11 @@ class RedditEntryTableViewCell: UITableViewCell {
     @IBOutlet weak var lblAuthor: UILabel!
     @IBOutlet weak var imgWidth: NSLayoutConstraint!
     
+    let dateFormatter = DateFormatter()
+    
     func setReddit(entry:RedditEntry) -> Void {
+        
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
         
         lblTitle.text = entry.title
         lblAuthor.text = entry.author
@@ -29,6 +33,9 @@ class RedditEntryTableViewCell: UITableViewCell {
         lblSubReddit.text = entry.subReddit
         imgThumbnail.image = nil;
         imgWidth.constant = 0
+        lblFecha.text = dateFormatter.string(from: entry.creationDate!)
+        
+        
         
         if let thumbnailUrl = entry.thumbnail {
             imgWidth.constant = 100

@@ -54,7 +54,7 @@ struct RedditEntry : CustomStringConvertible {
         let entry = RedditEntry(
             author: data["author"] as? String,
             title: data["title"] as? String,
-            creationDate: Date(),
+            creationDate: Date(timeIntervalSince1970: data["created"] as! Double!),
             thumbnail: thumbnail,
             subReddit: data["subreddit"] as? String,
             commentCount: data["num_comments"] as? Int,

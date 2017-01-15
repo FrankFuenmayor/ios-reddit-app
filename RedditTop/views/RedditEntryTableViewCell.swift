@@ -30,10 +30,10 @@ class RedditEntryTableViewCell: UITableViewCell {
         lblTitle.text = entry.title
         lblAuthor.text = entry.author
         lblComentarios.text = "Comentarios \(entry.commentCount!)"
-        lblSubReddit.text = entry.subReddit
+        lblSubReddit.text = entry.subReddit?.uppercased()
         imgThumbnail.image = nil;
+        lblFecha.text = string(from: entry.creationDate!)
         imgWidth.constant = 0
-        lblFecha.text = dateFormatter.string(from: entry.creationDate!)
         
         
         
@@ -41,5 +41,26 @@ class RedditEntryTableViewCell: UITableViewCell {
             imgWidth.constant = 100
             imgThumbnail.setImageWith(thumbnailUrl);
         }
+    }
+    
+    func string(from date:Date) -> String {
+        
+        let components = Set<Calendar.Component>([Calendar.Component.day,
+                          Calendar.Component.hour,
+                          Calendar.Component.minute])
+        var dateCmp = Calendar.current.dateComponents(components, from: date, to: Date())
+        
+        if let days = dateCmp.day,
+            days == 0 {
+            if let hour = dateCmp.hour, let minute = dateCmp.minute {
+                if hour == 0 {
+                    return "Hace \(abs(minute)) min\(abs(minute) > 0 ? "s":"" )"
+                } else {
+                    return "Hace \(abs(hour)) hora\(abs(hour) > 0 ? "s":"")"
+                }
+            }
+        }
+        
+        return dateFormatter.string(from: date)
     }
 }

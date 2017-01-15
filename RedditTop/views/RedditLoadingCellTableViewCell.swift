@@ -10,15 +10,22 @@ import UIKit
 
 class RedditLoadingCellTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet weak var lblLoading: UILabel!
+    
+    let format = "Cargando %@"
+    
+    func setListing(_ listing:RedditListing){
+        var category : String;
+        switch listing {
+        case .new:
+            category = "nuevos"
+        case .rising:
+            category = "subiendo"
+        case .top:
+            category = "popular"
+        }
+        
+        lblLoading.text = String(format:format,category)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
 }

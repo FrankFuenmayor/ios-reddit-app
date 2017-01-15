@@ -19,21 +19,17 @@ protocol RedditTableViewDelegate
                                 didSelectEntry entry:RedditEntry);
 }
 
-
 class RedditEntriesTableView: UITableView {
     
     var redditDelegate : RedditTableViewDelegate?
     
-    var redditEntries = [RedditEntry]()
-    var pageSize    = 10
-    
-    var lastRequest : URLSessionTask?
-    
     var selectedListing : RedditListing = RedditListing.top {
-        didSet(listing){
-            changeTo(listing: listing)
+        didSet {
+            load(listing: selectedListing)
         }
     }
+    
+    var model = RedditEntriesTableViewModel()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,59 +39,41 @@ class RedditEntriesTableView: UITableView {
         
         delegate = self
         dataSource = self
+        
+        model.delegate = self
     }
     
     /** Este metodo genera un request al Reddit y posteriormente llena la tabla con
      los datos
      */
     func load(listing:RedditListing) {
-        
-        let firstLoad = redditEntries.count  == 0
-        let topEndpoint = RedditEnpoint.endpoint(listing: selectedListing)
-        
-        lastRequest = RedditService.service.request(endpoint: topEndpoint,
-                                                    httpMethod: .get)
-        { [unowned self] (top) in
-            self.load(entries: top.getResponse(), replace: firstLoad)
+        model.load(listing: listing)
+    }
+}
+
+extension RedditEntriesTableView : RedditEntriesTableViewModelDelegate {
+    
+    func redditEntriesTableViewModelBeginLoad(from: Int) {
+        if from == 0 {
+            reloadData()
         }
     }
     
-    /** este metodo llena el modelo con el arreglo y refresca la tabla 
-     de manera apropiada
-     */
-    func load(entries newEntries:[RedditEntry], replace:Bool = true){
-        
-        if replace {
-            redditEntries.removeAll()
-            redditEntries.append(contentsOf: newEntries)
+    func redditEntriesTableViewModelDidLoad(entries:[RedditEntry],
+                                            from:Int,
+                                            to:Int) {
+        if from == 0 {
             reloadData()
             return
         }
         
-        let from = redditEntries.count;
-        redditEntries.append(contentsOf: newEntries)
-        
         var rows = [IndexPath]()
-        for row in from..<self.redditEntries.count {
+        
+        for row in from...to {
             rows.append(IndexPath(row: row, section: 0))
         }
         
         self.insertRows(at: rows, with: .fade)
-    }
-    
-    /** Cancela cualquier solicitud actual si existe una, limpia el modelo
-     y llama a load(listing) para cargar la tabla con nueva informacion
-    */
-    private func changeTo(listing:RedditListing){
-        
-        let shouldCancel = lastRequest?.state != .completed && lastRequest?.state != .canceling
-        
-        if shouldCancel {
-            lastRequest?.cancel()
-        }
-        redditEntries.removeAll()
-        reloadData()
-        load(listing: listing)
     }
 }
 
@@ -104,7 +82,7 @@ extension RedditEntriesTableView : UITableViewDelegate {
         
         //invocar el metodod de reddit delegate
         redditDelegate?.redditEntriesTableView(tableView: self,
-                                               didSelectEntry: redditEntries[indexPath.row])
+                                               didSelectEntry: model.entryAt(index: indexPath.row))
     }
 }
 
@@ -118,23 +96,32 @@ extension RedditEntriesTableView : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView , numberOfRowsInSection section: Int) -> Int {
         
-        let loadingCell = lastRequest?.state == URLSessionTask.State.running ? 1 : 0
+        if(model.isLoading) {
+            return 1;
+        }
         
-        return redditEntries.count + loadingCell;
+        return model.entriesCount() + (model.isLoading ? 1 : 0);
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let isLodiadingCellIndex = indexPath.row == redditEntries.count
-        
-        if isLodiadingCellIndex {
-            return tableView.dequeueReusableCell(withIdentifier: "loadingCell")!
+        if model.isLoading {
+            return loadingCell()
+        } else {
+            return entryCell(forRowAt:  indexPath)
         }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "redditEntryCell") as! RedditEntryTableViewCell
-        cell.setReddit(entry: self.redditEntries[indexPath.row])
+    }
+
+    func entryCell(forRowAt indexPath:IndexPath) -> UITableViewCell {
+        let cell = dequeueReusableCell(withIdentifier: "redditEntryCell") as! RedditEntryTableViewCell
+        cell.setReddit(entry: model.entryAt(index: indexPath.row))
         return cell;
     }
+
+    func loadingCell() -> UITableViewCell {
+        let cell =  dequeueReusableCell(withIdentifier: "loadingCell") as! RedditLoadingCellTableViewCell
+        cell.setListing(selectedListing)
+        return cell
+    }        
 }
 
 
@@ -146,7 +133,7 @@ extension RedditEntriesTableView : UIScrollViewDelegate {
         let updatePull = self.contentOffset.y >= area
         
         if (updatePull) {
-            load(listing: selectedListing)
+            model.load(listing: selectedListing)
         }
     }
 }

@@ -167,28 +167,22 @@
                                             <outlet property="lblTitle" destination="Hh9-Fa-B8c" id="xmA-yK-wJ7"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="loadingCell" rowHeight="38" id="ONs-ri-n6f" customClass="RedditEntryTableViewCell" customModule="RedditTop" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="loadingCell" rowHeight="38" id="ONs-ri-n6f" customClass="RedditLoadingCellTableViewCell" customModule="RedditTop" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="169" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ONs-ri-n6f" id="wXw-JO-h5L">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="37.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cargando" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y6-iJ-GgQ">
-                                                    <rect key="frame" x="8" y="8" width="75" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[...]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y6-iJ-GgQ">
+                                                    <rect key="frame" x="8" y="8" width="26" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="vXz-Il-U1E">
-                                                    <rect key="frame" x="91" y="8" width="20" height="22"/>
-                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="0Y6-iJ-GgQ" secondAttribute="bottom" id="4eR-Zv-CNH"/>
-                                                <constraint firstItem="vXz-Il-U1E" firstAttribute="top" secondItem="wXw-JO-h5L" secondAttribute="topMargin" id="F5R-oo-1jC"/>
-                                                <constraint firstItem="vXz-Il-U1E" firstAttribute="leading" secondItem="0Y6-iJ-GgQ" secondAttribute="trailing" constant="8" id="GAg-mM-1ai"/>
-                                                <constraint firstItem="vXz-Il-U1E" firstAttribute="centerY" secondItem="0Y6-iJ-GgQ" secondAttribute="centerY" id="MX2-IX-Q89"/>
                                                 <constraint firstItem="0Y6-iJ-GgQ" firstAttribute="top" secondItem="wXw-JO-h5L" secondAttribute="topMargin" id="mMF-sG-4Sw"/>
                                                 <constraint firstItem="0Y6-iJ-GgQ" firstAttribute="leading" secondItem="wXw-JO-h5L" secondAttribute="leadingMargin" id="zPV-Ww-7cE"/>
                                             </constraints>
@@ -197,6 +191,9 @@
                                         <variation key="heightClass=compact-widthClass=regular">
                                             <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                         </variation>
+                                        <connections>
+                                            <outlet property="lblLoading" destination="0Y6-iJ-GgQ" id="UMU-Ot-QYW"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <variation key="heightClass=compact-widthClass=regular">

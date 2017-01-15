@@ -33,8 +33,7 @@ class RedditEntryTableViewCell: UITableViewCell {
         lblSubReddit.text = entry.subReddit?.uppercased()
         imgThumbnail.image = nil;
         lblFecha.text = string(from: entry.creationDate!)
-        imgWidth.constant = 0
-        
+        imgWidth.constant = 0        
         
         
         if let thumbnailUrl = entry.thumbnail {

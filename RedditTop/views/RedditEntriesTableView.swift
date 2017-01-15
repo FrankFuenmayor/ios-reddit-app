@@ -117,13 +117,23 @@ extension RedditEntriesTableView : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView , numberOfRowsInSection section: Int) -> Int {
-        return redditEntries.count;
+        
+        let loadingCell = lastRequest?.state == URLSessionTask.State.running ? 1 : 0
+        
+        return redditEntries.count + loadingCell;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "redditEntryCell") as? RedditEntryTableViewCell
-        cell?.setReddit(entry: self.redditEntries[indexPath.row])
-        return cell!;
+        
+        let isLodiadingCellIndex = indexPath.row == redditEntries.count
+        
+        if isLodiadingCellIndex {
+            return tableView.dequeueReusableCell(withIdentifier: "loadingCell")!
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "redditEntryCell") as! RedditEntryTableViewCell
+        cell.setReddit(entry: self.redditEntries[indexPath.row])
+        return cell;
     }
 }
 

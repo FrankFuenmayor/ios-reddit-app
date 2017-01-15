@@ -28,7 +28,7 @@ class RedditEntriesTableViewModel {
     
     private(set) var isLoading = false
     
-    func load(listing:RedditListing) {
+    func load(listing:RedditListing, afterEntry: RedditEntry? = nil) {
         
         if listing != currentListing {
             redditEntries.removeAll()
@@ -37,7 +37,13 @@ class RedditEntriesTableViewModel {
         
         let fromIndex = redditEntries.count
         
-        lastRequest = RedditService.service.request(endpoint: RedditEnpoint.endpoint(listing: listing),
+        let endpoint = RedditEnpoint.endpoint(listing: listing)
+        
+        if let after = afterEntry {
+            endpoint.after(entry: after)
+        }
+        
+        lastRequest = RedditService.service.request(endpoint: endpoint,
                                                     httpMethod: .get)
         { [unowned self] (endpoint) in
             self.isLoading = false
@@ -49,6 +55,12 @@ class RedditEntriesTableViewModel {
         isLoading = true
         delegate?.redditEntriesTableViewModelBeginLoad(from: fromIndex)
         
+    }
+    
+    func loadNextPage(){
+        assert(currentListing != nil, "call load(listing:) first")
+        load(listing: currentListing!,
+             afterEntry: redditEntries.last)
     }
     
     func entriesCount() -> Int {

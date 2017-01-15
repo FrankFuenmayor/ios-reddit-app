@@ -96,19 +96,23 @@ extension RedditEntriesTableView : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView , numberOfRowsInSection section: Int) -> Int {
         
-        if(model.isLoading) {
+        if shouldPresentLoadingCell() {
             return 1;
         }
         
-        return model.entriesCount() + (model.isLoading ? 1 : 0);
+        return model.entriesCount();
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if model.isLoading {
+        if shouldPresentLoadingCell() {
             return loadingCell()
         } else {
             return entryCell(forRowAt:  indexPath)
         }
+    }
+    
+    func shouldPresentLoadingCell() -> Bool {
+        return model.isLoading && model.entriesCount() == 0;
     }
 
     func entryCell(forRowAt indexPath:IndexPath) -> UITableViewCell {
@@ -128,12 +132,11 @@ extension RedditEntriesTableView : UITableViewDataSource {
 extension RedditEntriesTableView : UIScrollViewDelegate {
     ///Implementacion del pull refresh de la tabla
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
         let area = self.contentSize.height - self.bounds.size.height;
         let updatePull = self.contentOffset.y >= area
         
-        if (updatePull) {
-            model.load(listing: selectedListing)
+        if (updatePull && !model.isLoading) {
+            model.loadNextPage()
         }
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RedditEntriesTableViewModelDelegate {
+protocol RedditEntriesTableViewModelDelegate : class {
     
     func redditEntriesTableViewModelDidLoad(entries:[RedditEntry],
                                             from:Int,
@@ -20,7 +20,7 @@ protocol RedditEntriesTableViewModelDelegate {
 
 class RedditEntriesTableViewModel {
     
-    var delegate : RedditEntriesTableViewModelDelegate?
+    weak var delegate : RedditEntriesTableViewModelDelegate?
     
     private var redditEntries = [RedditEntry]()
     private var lastRequest : URLSessionTask?
@@ -50,7 +50,7 @@ class RedditEntriesTableViewModel {
             self.redditEntries.append(contentsOf: endpoint.getResponse())
             self.delegate?.redditEntriesTableViewModelDidLoad(entries: self.redditEntries,
                                                               from: fromIndex,
-                                                              to: self.redditEntries.count - 1)
+                                                              to: fromIndex + (endpoint.getResponse().count - 1))
         }
         isLoading = true
         delegate?.redditEntriesTableViewModelBeginLoad(from: fromIndex)

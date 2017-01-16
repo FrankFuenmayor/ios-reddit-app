@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import AFNetworking
 
 ///protocolo usado por  RedditEntriesTableView
-protocol RedditTableViewDelegate
+protocol RedditTableViewDelegate : class
 {
     /**
      * Este metodo es llamado por RedditEntriesTableView cada vez que el usuario selecciona
@@ -21,7 +22,7 @@ protocol RedditTableViewDelegate
 
 class RedditEntriesTableView: UITableView {
     
-    var redditDelegate : RedditTableViewDelegate?
+    weak var redditDelegate : RedditTableViewDelegate?
     
     var selectedListing : RedditListing = RedditListing.top {
         didSet {

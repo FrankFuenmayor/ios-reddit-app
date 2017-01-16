@@ -28,10 +28,10 @@
                                 <color key="sectionIndexBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="redditEntryCell" rowHeight="113" id="WcN-LK-39u" customClass="RedditEntryTableViewCell" customModule="RedditTop" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="736" height="113"/>
+                                        <rect key="frame" x="0.0" y="56" width="736" height="113"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WcN-LK-39u" id="eQ9-CM-zeu">
-                                            <rect key="frame" x="0.0" y="0.0" width="736" height="113"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="736" height="112"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ue5-Wy-lyQ">
@@ -168,10 +168,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="loadingCell" rowHeight="38" id="ONs-ri-n6f" customClass="RedditLoadingCellTableViewCell" customModule="RedditTop" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="168.5" width="736" height="38"/>
+                                        <rect key="frame" x="0.0" y="169" width="736" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ONs-ri-n6f" id="wXw-JO-h5L">
-                                            <rect key="frame" x="0.0" y="0.0" width="736" height="38"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="736" height="37"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[...]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y6-iJ-GgQ">
@@ -208,11 +208,11 @@
                                 <rect key="frame" x="0.0" y="64" width="736" height="44"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="sHp-UG-SsX">
-                                        <rect key="frame" x="290.66666666666669" y="8" width="155" height="29"/>
+                                        <rect key="frame" x="259.33333333333331" y="8" width="218" height="29"/>
                                         <segments>
-                                            <segment title="Top"/>
-                                            <segment title="New"/>
-                                            <segment title="Rising"/>
+                                            <segment title="Popular"/>
+                                            <segment title="Nuevo"/>
+                                            <segment title="Subiendo"/>
                                         </segments>
                                         <color key="tintColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </segmentedControl>

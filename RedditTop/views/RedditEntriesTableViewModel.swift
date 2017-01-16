@@ -8,12 +8,15 @@
 
 import Foundation
 
+///Delegado para comunicar la tabla y modelo
 protocol RedditEntriesTableViewModelDelegate : class {
     
+    ///Se llama cuando se carga el modelo
     func redditEntriesTableViewModelDidLoad(entries:[RedditEntry],
                                             from:Int,
                                             to:Int)
     
+    ///Se llama al solicitar los items al API
     func redditEntriesTableViewModelBeginLoad(from:Int)
     
 }
@@ -28,6 +31,12 @@ class RedditEntriesTableViewModel {
     
     private(set) var isLoading = false
     
+    /**
+    Cargar con el listado especifico
+     - parameters:
+        - listing: el listado a cargar
+        - afterEntry: solicitar entradas posteriores a la entrada indicada
+    */
     func load(listing:RedditListing, afterEntry: RedditEntry? = nil) {
         
         if listing != currentListing {
@@ -57,16 +66,25 @@ class RedditEntriesTableViewModel {
         
     }
     
+    ///Carga la siguiente pagina
     func loadNextPage(){
         assert(currentListing != nil, "call load(listing:) first")
         load(listing: currentListing!,
              afterEntry: redditEntries.last)
     }
     
+    /**
+     Cantidad de entradas en el modelo
+     - returns: Int: la cantidad de entradas en el modelo
+     */
     func entriesCount() -> Int {
         return redditEntries.count
     }
     
+    /**
+     - parameter index: el indice del item.
+     - returns: el item en el indice indicado
+     */
     func entryAt(index:Int) -> RedditEntry {
         return redditEntries[index]
     }

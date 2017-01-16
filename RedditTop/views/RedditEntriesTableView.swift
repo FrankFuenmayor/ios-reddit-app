@@ -13,8 +13,8 @@ import AFNetworking
 protocol RedditTableViewDelegate : class
 {
     /**
-     * Este metodo es llamado por RedditEntriesTableView cada vez que el usuario selecciona
-     * una elemento de la tabla
+     Este metodo es llamado por RedditEntriesTableView cada vez que el usuario selecciona una elemento de la tabla
+     - parameter didSelectEntry: La celda seleccionada por el usuario
      */
     func redditEntriesTableView(tableView:RedditEntriesTableView,
                                 didSelectEntry entry:RedditEntry);
@@ -112,16 +112,19 @@ extension RedditEntriesTableView : UITableViewDataSource {
         }
     }
     
+    /// - returns: true si se debe presentar la celda de carga
     func shouldPresentLoadingCell() -> Bool {
         return model.isLoading && model.entriesCount() == 0;
     }
 
+    /// - returns: la celda que se muestra la informacion del item
     func entryCell(forRowAt indexPath:IndexPath) -> UITableViewCell {
         let cell = dequeueReusableCell(withIdentifier: "redditEntryCell") as! RedditEntryTableViewCell
         cell.setReddit(entry: model.entryAt(index: indexPath.row))
         return cell;
     }
 
+    /// - returns: la celda que se muestra cuando la tabla se esta cargando
     func loadingCell() -> UITableViewCell {
         let cell =  dequeueReusableCell(withIdentifier: "loadingCell") as! RedditLoadingCellTableViewCell
         cell.setListing(selectedListing)

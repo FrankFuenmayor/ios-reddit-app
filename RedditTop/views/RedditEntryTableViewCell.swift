@@ -42,6 +42,7 @@ class RedditEntryTableViewCell: UITableViewCell {
         }
     }
     
+    /// returns: Un string con el texto que se mostrara en la fecha
     func string(from date:Date) -> String {
         
         let components = Set<Calendar.Component>([Calendar.Component.day,

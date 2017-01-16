@@ -81,6 +81,10 @@ extension RedditEntriesTableView : RedditEntriesTableViewModelDelegate {
 extension RedditEntriesTableView : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        guard indexPath.row < model.entriesCount() else {
+            return
+        }
+        
         //invocar el metodod de reddit delegate
         redditDelegate?.redditEntriesTableView(tableView: self,
                                                didSelectEntry: model.entryAt(index: indexPath.row))

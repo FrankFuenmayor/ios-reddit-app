@@ -22,7 +22,7 @@ enum RedditListing {
  ya que aprovechamos que el switch en swift debe ser exaustivo.
  */
 extension RedditEnpoint {
-    static func endpoint(listing:RedditListing) -> RedditEnpoint {
+    static func endpoint(_ listing:RedditListing) -> RedditEnpoint {
         switch listing {
         case .top:
             return  RedditTop()

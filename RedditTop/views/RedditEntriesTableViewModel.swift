@@ -12,12 +12,12 @@ import Foundation
 protocol RedditEntriesTableViewModelDelegate : class {
     
     ///Se llama cuando se carga el modelo
-    func redditEntriesTableViewModelDidLoad(entries:[RedditEntry],
+    func redditEntriesTableViewModelDidLoad(_ entries:[RedditEntry],
                                             from:Int,
                                             to:Int)
     
     ///Se llama al solicitar los items al API
-    func redditEntriesTableViewModelBeginLoad(from:Int)
+    func redditEntriesTableViewModelBeginLoad(_ from:Int)
     
 }
 
@@ -25,11 +25,11 @@ class RedditEntriesTableViewModel {
     
     weak var delegate : RedditEntriesTableViewModelDelegate?
     
-    private var redditEntries = [RedditEntry]()
-    private var lastRequest : URLSessionTask?
-    private var currentListing : RedditListing?;
+    fileprivate var redditEntries = [RedditEntry]()
+    fileprivate var lastRequest : URLSessionTask?
+    fileprivate var currentListing : RedditListing?;
     
-    private(set) var isLoading = false
+    fileprivate(set) var isLoading = false
     
     /**
     Cargar con el listado especifico
@@ -37,7 +37,7 @@ class RedditEntriesTableViewModel {
         - listing: el listado a cargar
         - afterEntry: solicitar entradas posteriores a la entrada indicada
     */
-    func load(listing:RedditListing, afterEntry: RedditEntry? = nil) {
+    func load(_ listing:RedditListing, afterEntry: RedditEntry? = nil) {
         
         if listing != currentListing {
             redditEntries.removeAll()
@@ -46,30 +46,30 @@ class RedditEntriesTableViewModel {
         
         let fromIndex = redditEntries.count
         
-        let endpoint = RedditEnpoint.endpoint(listing: listing)
+        let endpoint = RedditEnpoint.endpoint(listing)
         
         if let after = afterEntry {
-            endpoint.after(entry: after)
+            endpoint.after(after)
         }
         
-        lastRequest = RedditService.service.request(endpoint: endpoint,
+        lastRequest = RedditService.service.request(endpoint,
                                                     httpMethod: .get)
         { [unowned self] (endpoint) in
             self.isLoading = false
             self.redditEntries.append(contentsOf: endpoint.getResponse())
-            self.delegate?.redditEntriesTableViewModelDidLoad(entries: self.redditEntries,
+            self.delegate?.redditEntriesTableViewModelDidLoad(self.redditEntries,
                                                               from: fromIndex,
                                                               to: fromIndex + (endpoint.getResponse().count - 1))
         }
         isLoading = true
-        delegate?.redditEntriesTableViewModelBeginLoad(from: fromIndex)
+        delegate?.redditEntriesTableViewModelBeginLoad(fromIndex)
         
     }
     
     ///Carga la siguiente pagina
     func loadNextPage(){
         assert(currentListing != nil, "call load(listing:) first")
-        load(listing: currentListing!,
+        load(currentListing!,
              afterEntry: redditEntries.last)
     }
     
@@ -85,7 +85,7 @@ class RedditEntriesTableViewModel {
      - parameter index: el indice del item.
      - returns: el item en el indice indicado
      */
-    func entryAt(index:Int) -> RedditEntry {
+    func entryAt(_ index:Int) -> RedditEntry {
         return redditEntries[index]
     }
 }

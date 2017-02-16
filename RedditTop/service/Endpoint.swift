@@ -23,7 +23,7 @@ protocol Endpoint {
     func getQueryParams() -> [String:String]
     
     ///Este metodo es llamado por RedditService al recibir la respuesta del API
-    func receive(responseObject:Any?, response:URLResponse?, error:Error?) -> Void
+    func receive(_ responseObject:Any?, response:URLResponse?, error:Error?) -> Void
     
     ///La respuesta ya convertida al typo deseado
     func getResponse() -> EndpointResponseType

@@ -27,7 +27,7 @@ class RedditDetailViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action,
                                                             target: self,
-                                                            action: #selector(shareAction))
+                                                            action: #selector(shareAction))                
     }
     
     func close() {

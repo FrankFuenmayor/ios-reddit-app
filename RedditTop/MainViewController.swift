@@ -20,12 +20,12 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         self.tblEntries.redditDelegate = self;
-        sgmListing.addTarget(self, action: #selector(changeListing(segmented:)), for: .valueChanged)
-        tblEntries.load(listing: availableListing[sgmListing.selectedSegmentIndex])
+        sgmListing.addTarget(self, action: #selector(changeListing(_:)), for: .valueChanged)
+        tblEntries.load(availableListing[sgmListing.selectedSegmentIndex])
         
     }
     
-    func changeListing(segmented:UISegmentedControl){
+    func changeListing(_ segmented:UISegmentedControl){
         tblEntries.selectedListing = availableListing[segmented.selectedSegmentIndex]
     }
     
@@ -40,7 +40,7 @@ class MainViewController: UIViewController {
  */
 extension MainViewController : RedditTableViewDelegate {
     
-    func redditEntriesTableView(tableView: RedditEntriesTableView, didSelectEntry entry: RedditEntry) {
+    func redditEntriesTableView(_ tableView: RedditEntriesTableView, didSelectEntry entry: RedditEntry) {
         selectedEntry = entry
         performSegue(withIdentifier: "presentRedditDetail", sender: self)
     }

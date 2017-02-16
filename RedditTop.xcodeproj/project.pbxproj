@@ -317,18 +317,18 @@
 				TargetAttributes = {
 					01D7265B1E283D20006EE465 = {
 						CreatedOnToolsVersion = 8.1;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					01D7266F1E283D20006EE465 = {
 						CreatedOnToolsVersion = 8.1;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 01D7265B1E283D20006EE465;
 					};
 					01D7267A1E283D20006EE465 = {
 						CreatedOnToolsVersion = 8.1;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 01D7265B1E283D20006EE465;
 					};
@@ -716,7 +716,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.frankfg.RedditTopTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedditTop.app/RedditTop";
 			};
 			name = Debug;
@@ -732,7 +732,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.frankfg.RedditTopTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedditTop.app/RedditTop";
 			};
 			name = Release;
@@ -745,7 +745,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.frankfg.RedditTopUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = RedditTop;
 			};
 			name = Debug;
@@ -758,7 +758,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.frankfg.RedditTopUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = RedditTop;
 			};
 			name = Release;

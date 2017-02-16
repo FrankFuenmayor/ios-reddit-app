@@ -23,7 +23,7 @@ class RedditEntryTableViewCell: UITableViewCell {
     
     let dateFormatter = DateFormatter()
     
-    func setReddit(entry:RedditEntry) -> Void {
+    func setReddit(_ entry:RedditEntry) -> Void {
         
         dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
         

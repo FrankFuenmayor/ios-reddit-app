@@ -17,16 +17,16 @@ class RedditEnpoint : Endpoint {
     ///El tipo de dato esperado en la respuesta
     typealias EndpointResponseType = [RedditEntry]
     
-    private var queryParams : [String:String]
-    private var entries = [RedditEntry]()
-    private var completionHandler : ((EndpointResponseType) -> Void)?
+    fileprivate var queryParams : [String:String]
+    fileprivate var entries = [RedditEntry]()
+    fileprivate var completionHandler : ((EndpointResponseType) -> Void)?
     
     init() {
         queryParams = [:]
     }
     
     ///para la paginacion reddit no usa numero de pagina sino que se hace referencia a una entrada y si se quiere lo que esta antes o despues de la misma
-    func after(entry:RedditEntry?) {
+    func after(_ entry:RedditEntry?) {
         if let name = entry?.name {
             queryParams = ["after" : name]
         } else {
@@ -51,7 +51,7 @@ class RedditEnpoint : Endpoint {
         return entries;
     }
     
-    func receive(responseObject: Any?, response: URLResponse?, error: Error?) {
+    func receive(_ responseObject: Any?, response: URLResponse?, error: Error?) {
         
         //only dictionaries are valid for this endpoint
         guard responseObject is [String:AnyObject] else {

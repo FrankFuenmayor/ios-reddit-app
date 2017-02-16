@@ -9,44 +9,19 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
-            filePath = "RedditTop/RedditEntriesTableView.swift"
-            timestampString = "506125764.446204"
+            filePath = "RedditTop/views/RedditEntriesTableView.swift"
+            timestampString = "506232516.359974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "load(listing:)"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.Log">
+                  ActionExtensionID = "Xcode.BreakpointAction.Sound">
                   <ActionContent
-                     message = "loading @selectedListing@"
-                     conveyanceType = "0">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "RedditTop/views/RedditEntryTableViewCell.swift"
-            timestampString = "506125764.446204"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "setReddit(entry:)"
-            landmarkType = "7">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
-                  <ActionContent
-                     consoleCommand = "po thumbnailUrl">
+                     soundName = "Glass">
                   </ActionContent>
                </BreakpointActionProxy>
             </Actions>

@@ -16,7 +16,7 @@ protocol RedditTableViewDelegate : class
      Este metodo es llamado por RedditEntriesTableView cada vez que el usuario selecciona una elemento de la tabla
      - parameter didSelectEntry: La celda seleccionada por el usuario
      */
-    func redditEntriesTableView(tableView:RedditEntriesTableView,
+    func redditEntriesTableView(_ tableView:RedditEntriesTableView,
                                 didSelectEntry entry:RedditEntry);
 }
 
@@ -26,7 +26,7 @@ class RedditEntriesTableView: UITableView {
     
     var selectedListing : RedditListing = RedditListing.top {
         didSet {
-            load(listing: selectedListing)
+            load(selectedListing)
         }
     }
     
@@ -47,20 +47,20 @@ class RedditEntriesTableView: UITableView {
     /** Este metodo genera un request al Reddit y posteriormente llena la tabla con
      los datos
      */
-    func load(listing:RedditListing) {
-        model.load(listing: listing)
+    func load(_ listing:RedditListing) {
+        model.load(listing)
     }
 }
 
 extension RedditEntriesTableView : RedditEntriesTableViewModelDelegate {
     
-    func redditEntriesTableViewModelBeginLoad(from: Int) {
+    func redditEntriesTableViewModelBeginLoad(_ from: Int) {
         if from == 0 {
             reloadData()
         }
     }
     
-    func redditEntriesTableViewModelDidLoad(entries:[RedditEntry],
+    func redditEntriesTableViewModelDidLoad(_ entries:[RedditEntry],
                                             from:Int,
                                             to:Int) {
         if from == 0 {
@@ -86,12 +86,12 @@ extension RedditEntriesTableView : UITableViewDelegate {
         }
         
         //invocar el metodod de reddit delegate
-        redditDelegate?.redditEntriesTableView(tableView: self,
-                                               didSelectEntry: model.entryAt(index: indexPath.row))
+        redditDelegate?.redditEntriesTableView(self,
+                                               didSelectEntry: model.entryAt(indexPath.row))
     }
 }
 
-// MARK: UIKit metodods necesatios para la vista
+// MARK: UIKit metodos necesarios para la vista
 
 extension RedditEntriesTableView : UITableViewDataSource {
     
@@ -124,7 +124,7 @@ extension RedditEntriesTableView : UITableViewDataSource {
     /// - returns: la celda que se muestra la informacion del item
     func entryCell(forRowAt indexPath:IndexPath) -> UITableViewCell {
         let cell = dequeueReusableCell(withIdentifier: "redditEntryCell") as! RedditEntryTableViewCell
-        cell.setReddit(entry: model.entryAt(index: indexPath.row))
+        cell.setReddit(model.entryAt(indexPath.row))
         return cell;
     }
 
